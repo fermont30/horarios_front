@@ -1,0 +1,30 @@
+/* Animaciones para el modal */
+:host {
+  display: block;
+}
+
+.fixed {
+  transition: opacity 0.3s ease;
+}
+
+.bg-opacity-50 {
+  transition: background-color 0.3s ease;
+}
+
+.relative {
+  transition: all 0.3s ease;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Estado inicial para animación */
+.modal-enter .fixed,
+.modal-leave-to .fixed {
+  opacity: 0;
+}
+
+.modal-enter .relative,
+.modal-leave-to .relative {
+  transform: translateY(-20px);
+  opacity: 0;
+}
