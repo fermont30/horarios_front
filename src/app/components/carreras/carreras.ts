@@ -4,6 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { CarreraService } from '../../services/carrera.service';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-carreras',
@@ -43,15 +45,36 @@ export class Carreras {
     });
   }
 
-  eliminarCarrera(id: number) {
-    if (confirm('¿Seguro que deseas eliminar esta carrera?')) {
-      this.carreraService.delete(id).subscribe({
-        next: () => {
-          this.toastr.success('Carrera eliminada');
-          this.cargarCarreras();
-        },
-        error: () => this.toastr.error('Error al eliminar carrera'),
-      });
-    }
+eliminarCarrera(id: number) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "¡No podrás revertir esta acción!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.carreraService.delete(id).subscribe({
+          next: () => {
+            Swal.fire(
+              '¡Eliminada!',
+              'La carrera ha sido eliminada.',
+              'success'
+            );
+            this.cargarCarreras();
+          },
+          error: () => {
+            Swal.fire(
+              'Error',
+              'Ocurrió un error al eliminar la carrera',
+              'error'
+            );
+          }
+        });
+      }
+    });
   }
 }

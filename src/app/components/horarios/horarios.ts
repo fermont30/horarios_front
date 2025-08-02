@@ -1,4 +1,3 @@
-// horarios.ts - Versión corregida
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Aula, Bloque, Horario, PeriodoAcademico } from '../../models/horario';

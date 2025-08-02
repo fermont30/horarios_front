@@ -12,6 +12,8 @@ import { Permisos } from './permisos/permisos';
 import { Usuarios } from './usuarios/usuarios';
 import { Register } from './auth/register/register';
 import { Newcarrera } from './carreras/newcarrera/newcarrera';
+import { Newaulas } from './aulas/newaulas/newaulas';
+import { Newasignaturas } from './asignaturas/newasignaturas/newasignaturas';
 
 export const routesDashboard: Routes = [
   {
@@ -19,7 +21,12 @@ export const routesDashboard: Routes = [
     component: Home,
     children: [
       { path: 'asignaturas', component: Asignaturas },
+      { path: 'nueva-asignatura', component: Newasignaturas },
+      { path: 'nueva-asignatura/:id', component: Newasignaturas },
       { path: 'asistencia', component: Asistencias },
+      { path: 'aulas', component: Aulas },
+      { path: 'nueva-aula', component: Newaulas },
+      { path: 'nueva-aula/:id', component: Newaulas },
       { path: 'aulas', component: Aulas },
       { path: 'carreras', component: Carreras },
       { path: 'nueva-carrera', component: Newcarrera },

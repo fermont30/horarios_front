@@ -1,43 +1,43 @@
+<!-- dashboard-layout.component.html -->
 <div class="min-h-screen flex bg-gray-100 text-gray-800">
-  <!-- Sidebar -->
-  <aside class="w-64 bg-white shadow-md flex flex-col">
+  <!-- Sidebar Fijo -->
+  <aside class="w-64 bg-white shadow-md flex flex-col fixed h-screen">
     <div class="p-6 text-blue-600 font-bold text-xl border-b">
-      🎓 Gestion Académica
+      🎓 Gestión Académica
     </div>
     <nav class="flex-1 p-4 space-y-2">
       @if (isAdmin) {
         <a routerLink="/dash/usuarios" class="block py-2 px-4 rounded hover:bg-blue-100">👥 Usuarios</a>
-        <a routerLink="/dash/docentes" class="block py-2 px-4 rounded hover:bg-blue-100">👨‍🏫 Docentes</a>
       }      
+      <a routerLink="/dash/docentes" class="block py-2 px-4 rounded hover:bg-blue-100">👨‍🏫 Docentes</a>
       <a routerLink="/dash/aulas" class="block py-2 px-4 rounded hover:bg-blue-100">🏫 Aulas</a>
       <a routerLink="/dash/carreras" class="block py-2 px-4 rounded hover:bg-blue-100">🎓 Carreras</a>
       <a routerLink="/dash/asignaturas" class="block py-2 px-4 rounded hover:bg-blue-100">📚 Asignaturas</a>
       <a routerLink="/dash/horarios" class="block py-2 px-4 rounded hover:bg-blue-100">🗓️ Horarios</a>
     </nav>
-   <div class="p-4 border-t flex justify-end">
-  <button
-    (click)="logOut()"
-    class="flex items-center gap-2 bg-red-50 text-red-600 px-14 py-2 rounded-md border border-red-200 hover:bg-red-100 hover:text-red-700 transition font-medium text-sm shadow-sm"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 002 2h3a2 2 0 002-2V7a2 2 0 00-2-2h-3a2 2 0 00-2 2v1" />
-    </svg>
-    Cerrar sesión
-  </button>
-</div>
-
+    <div class="p-4 border-t flex justify-end">
+      <button
+        (click)="logOut()"
+        class="flex items-center gap-2 bg-red-50 text-red-600 px-14 py-2 rounded-md border border-red-200 hover:bg-red-100 hover:text-red-700 transition font-medium text-sm shadow-sm"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 002 2h3a2 2 0 002-2V7a2 2 0 00-2-2h-3a2 2 0 00-2 2v1" />
+        </svg>
+        Cerrar sesión
+      </button>
+    </div>
   </aside>
 
-  <!-- Content -->
-  <div class="flex-1 flex flex-col">
-    <!-- Topbar -->
-    <header class="bg-white shadow p-1">
+  <!-- Contenido Principal (con margen para el sidebar) -->
+  <div class="flex-1 ml-64">
+    <!-- Topbar Fijo -->
+    <header class="bg-white shadow p-4 sticky top-0 z-10">
       <h1 class="text-xl font-semibold">Panel de Administración</h1>
     </header>
 
-    <!-- Router Outlet -->
-    <main class="p-6">
+    <!-- Contenedor del Router Outlet (con desplazamiento) -->
+    <div class="h-[calc(100vh-64px)] overflow-y-auto">
       <router-outlet></router-outlet>
-    </main>
+    </div>
   </div>
 </div>

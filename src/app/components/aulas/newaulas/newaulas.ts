@@ -1,44 +1,46 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Carrera } from '../../../models/carrera';
-import { CarreraService } from '../../../services/carrera.service';
-import Swal from 'sweetalert2';
+import { Aula } from '../../../models/aula';
+import { AulaService } from '../../../services/aula.service';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-newcarrera',
-  imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './newcarrera.html',
-  styleUrl: './newcarrera.css'
+  selector: 'app-newaulas',
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './newaulas.html',
+  styleUrl: './newaulas.css'
 })
-export class Newcarrera {
+export class Newaulas {
   form: FormGroup;
   id: number | null = null;
+  jornadas = ['matutina', 'vespertina', 'nocturna'];
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private carreraService: CarreraService,
+    private aulaService: AulaService,
     public router: Router
   ) {
     this.form = this.fb.group({
       nombre: ['', Validators.required],
       codigo: ['', Validators.required],
-      descripcion: ['', Validators.required],
+      capacidad: ['', [Validators.required, Validators.min(1)]],
+      jornada: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     if (this.id) {
-      this.carreraService.getById(this.id).subscribe({
+      this.aulaService.getById(this.id).subscribe({
         next: (data) => {
           this.form.patchValue(data);
         },
         error: () => {
-          Swal.fire('Error', 'No se pudo cargar la carrera', 'error');
-          this.router.navigate(['/dash/carreras']);
+          Swal.fire('Error', 'No se pudo cargar el aula', 'error');
+          this.router.navigate(['/dash/aulas']);
         }
       });
     }
@@ -47,45 +49,45 @@ export class Newcarrera {
   onSubmit() {
     if (this.form.invalid) return;
 
-    const carrera: Carrera = this.form.value;
+    const aula: Aula = this.form.value;
 
     if (this.id) {
-      this.carreraService.update(this.id, carrera).subscribe({
+      this.aulaService.update(this.id, aula).subscribe({
         next: () => {
           Swal.fire({
             title: '¡Éxito!',
-            text: 'Carrera actualizada correctamente',
+            text: 'Aula actualizada correctamente',
             icon: 'success',
             confirmButtonText: 'Aceptar'
           }).then(() => {
-            this.router.navigate(['/dash/carreras']);
+            this.router.navigate(['/dash/aulas']);
           });
         },
         error: () => {
           Swal.fire({
             title: 'Error',
-            text: 'Ocurrió un error al actualizar la carrera',
+            text: 'Ocurrió un error al actualizar el aula',
             icon: 'error',
             confirmButtonText: 'Aceptar'
           });
         }
       });
     } else {
-      this.carreraService.create(carrera).subscribe({
+      this.aulaService.create(aula).subscribe({
         next: () => {
           Swal.fire({
             title: '¡Éxito!',
-            text: 'Carrera registrada correctamente',
+            text: 'Aula registrada correctamente',
             icon: 'success',
             confirmButtonText: 'Aceptar'
           }).then(() => {
-            this.router.navigate(['/dash/carreras']);
+            this.router.navigate(['/dash/aulas']);
           });
         },
         error: () => {
           Swal.fire({
             title: 'Error',
-            text: 'Ocurrió un error al registrar la carrera',
+            text: 'Ocurrió un error al registrar el aula',
             icon: 'error',
             confirmButtonText: 'Aceptar'
           });
