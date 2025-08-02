@@ -136,7 +136,8 @@ export class HorarioModal implements OnInit {
       this.horarioService.delete(this.horario.id).subscribe({
         next: () => {
           this.toastr.success('Horario eliminado correctamente');
-          this.saved.emit(this.horario!);
+          // Emitir un evento especial para indicar que se eliminó el horario
+          this.saved.emit({ ...this.horario, deleted: true } as any);
           this.closeModal();
         },
         error: (error) => {

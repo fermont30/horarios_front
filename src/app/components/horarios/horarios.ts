@@ -104,7 +104,13 @@ export class Horarios {
       }
     });
 
+    const aulasAnterior = this.aulas.map(a => a.id);
     this.aulas = Array.from(aulasEnPeriodo.values());
+    
+    // Si el aula seleccionada ya no está disponible, resetearla
+    if (this.aulaSeleccionada && !this.aulas.some(a => a.id === this.aulaSeleccionada?.id)) {
+      this.aulaSeleccionada = null;
+    }
   }
 
   getHorariosFiltrados(): Horario[] {
@@ -158,22 +164,36 @@ export class Horarios {
   }
 
   onHorarioSaved(horario: Horario): void {
-    // Actualizar la lista de horarios
-    const index = this.horarios.findIndex(h => h.id === horario.id);
-    if (index >= 0) {
-      this.horarios[index] = horario;
-    } else {
-      this.horarios.push(horario);
-    }
+    // Cerrar el modal primero
+    this.closeModal();
     
-    // Actualizar la lista de aulas si es necesario
-    if (horario.aula && !this.aulas.some(a => a.id === horario.aula?.id)) {
-      this.aulas.push(horario.aula);
-    }
-    
-    setTimeout(() => {
-      this.closeModal();
-      this.cdr.detectChanges();
+    // Recargar todos los horarios desde el servidor
+    this.horarioService.getAll().subscribe({
+      next: (horariosActualizados) => {
+        this.horarios = horariosActualizados || [];
+        
+        // Mantener las selecciones actuales
+        const periodoActual = this.periodoSeleccionado;
+        const aulaActual = this.aulaSeleccionada;
+        
+        // Actualizar aulas disponibles
+        this.updateAulasDisponibles();
+        
+        // Restaurar las selecciones si siguen siendo válidas
+        if (periodoActual && this.periodosAcademicos.some(p => p.id === periodoActual.id)) {
+          this.periodoSeleccionado = periodoActual;
+        }
+        
+        if (aulaActual && this.aulas.some(a => a.id === aulaActual.id)) {
+          this.aulaSeleccionada = aulaActual;
+        }
+        
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Error al recargar horarios:', error);
+        this.toastr.error('Error al actualizar la vista');
+      }
     });
   }
 }
