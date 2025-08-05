@@ -14,6 +14,7 @@ import { Register } from './auth/register/register';
 import { Newcarrera } from './carreras/newcarrera/newcarrera';
 import { Newaulas } from './aulas/newaulas/newaulas';
 import { Newasignaturas } from './asignaturas/newasignaturas/newasignaturas';
+import { Editusuarios } from './usuarios/editusuarios/editusuarios';
 
 export const routesDashboard: Routes = [
   {
@@ -38,6 +39,7 @@ export const routesDashboard: Routes = [
       { path: 'permisos', component: Permisos },
       { path: 'register', component: Register },      
       { path: 'usuarios', component: Usuarios },
+      { path: 'usuarios/:id', component: Editusuarios },
       { path: '', redirectTo: 'horarios', pathMatch: 'full' }
 
     ]

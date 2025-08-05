@@ -21,7 +21,7 @@ export class Register {
     private fb: FormBuilder,
     private auth: AuthService,
     private toastr: ToastrService,
-    private router: Router
+    public router: Router
   ) {
     this.form = this.fb.group({
       nombres: ['', Validators.required],

@@ -1,5 +1,5 @@
 <div class="max-w-lg mx-auto bg-white shadow rounded-lg mt-4 px-6 py-6 border border-gray-200">
-  <h2 class="text-2xl font-bold text-gray-800 text-center mb-4">Registro de Usuario</h2>
+  <h2 class="text-2xl font-bold text-gray-800 text-center mb-4">Editar Usuario</h2>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
     <div>
@@ -7,7 +7,7 @@
       <input
         formControlName="nombres"
         type="text"
-        placeholder="Ej: Juan Carlos"
+        placeholder="Ej: Juan"
         class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none focus:border-blue-500 text-sm"
       />
     </div>
@@ -17,7 +17,7 @@
       <input
         formControlName="apellidos"
         type="text"
-        placeholder="Ej: Pérez Gómez"
+        placeholder="Ej: Pérez"
         class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none focus:border-blue-500 text-sm"
       />
     </div>
@@ -27,7 +27,7 @@
       <input
         formControlName="cedula"
         type="text"
-        placeholder="Ej: 0123456789"
+        placeholder="Ej: 1234567890"
         class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none focus:border-blue-500 text-sm"
       />
     </div>
@@ -37,21 +37,27 @@
       <input
         formControlName="email"
         type="email"
-        placeholder="ejemplo@correo.com"
+        placeholder="Ej: ejemplo@correo.com"
         class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none focus:border-blue-500 text-sm"
       />
     </div>
 
     <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Rol</label>
-      <select
-        formControlName="rol"
-        class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none focus:border-blue-500 bg-white text-sm"
-      >
-        <option value="" disabled selected>Seleccione un rol</option>
-        <option value="user">Docente</option>
-        <option value="staff">Gestión</option>
-      </select>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Roles</label>
+      <div class="flex flex-col gap-2 mt-1">
+        @for (rol of rolesDisponibles; track rol) {
+          <label class="inline-flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              [value]="rol"
+              [checked]="form.value.roles.includes(rol)"
+              (change)="onChangeRol($event)"
+              class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            />
+            {{ rol | titlecase }}
+          </label>
+        }
+      </div>
     </div>
 
     <div class="flex justify-between gap-4 pt-2">
@@ -71,7 +77,7 @@
         [disabled]="form.invalid"
         class="flex-1 bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition disabled:bg-blue-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
       >
-        Registrar
+        Guardar
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
         </svg>
