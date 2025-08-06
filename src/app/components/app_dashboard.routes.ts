@@ -15,6 +15,7 @@ import { Newcarrera } from './carreras/newcarrera/newcarrera';
 import { Newaulas } from './aulas/newaulas/newaulas';
 import { Newasignaturas } from './asignaturas/newasignaturas/newasignaturas';
 import { Editusuarios } from './usuarios/editusuarios/editusuarios';
+import { Newdocente } from './docentes/newdocente/newdocente';
 
 export const routesDashboard: Routes = [
   {
@@ -34,6 +35,8 @@ export const routesDashboard: Routes = [
       { path: 'nueva-carrera/:id', component: Newcarrera },
       { path: 'disponibilidad', component: Disponibilidad },
       { path: 'docentes', component: Docentes },
+      { path: 'nuevo-docente', component: Newdocente },
+      { path: 'nuevo-docente/:id', component: Newdocente },
       { path: 'horarios', component: Horarios },
       { path: 'periodo', component: Periodos },
       { path: 'permisos', component: Permisos },

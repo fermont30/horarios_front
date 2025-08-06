@@ -48,6 +48,29 @@ export class TokenService {
     return false;
   }
 
+
+hasUserRole(): boolean {
+  const token = this.getToken();
+  if (!token) return false;
+
+  const decoded = this.decodeToken(token);
+  if (!decoded) return false;
+
+  // Verifica roles de diferentes maneras posibles
+  if (Array.isArray(decoded.roles)) {
+    return decoded.roles.includes('user');
+  } else if (typeof decoded.roles === 'string') {
+    return decoded.roles === 'user';
+  } else if (decoded.role) { // Algunas APIs usan 'role' singular
+    return decoded.role === 'user';
+  }
+
+  return false;
+}
+
+
+
+
   getUserId(): number | null {
     const token = this.getToken();
     if (!token) return null;
